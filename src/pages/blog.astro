@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+// 1. Fetch all entries from the 'blog' collection
+const allPosts = await getCollection("blog");
+
+// 2. Sort them by date (Newest first)
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<MainLayout title="Intentional Tech Blog" description="Blog">
+  <h1>Posts</h1>
+  <ul>
+    {
+      sortedPosts.map((post) => (
+        <li>
+          <span>{post.data.pubDate.toLocaleDateString()}</span>
+          <a href={`/blog/${post.slug || post.id}/`}>{post.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</MainLayout>

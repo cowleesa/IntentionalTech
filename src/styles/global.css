@@ -1,0 +1,43 @@
+
+
+body {
+    background-color:lavender;
+}
+
+p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: large;
+    color:darkslategrey;
+    margin: 2rem auto;
+    max-width: 800px;
+    text-align: justify;
+    text-align-last: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    hyphens: auto;
+}
+
+h1 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: xx-large;
+    color:mediumslateblue;
+    text-align: left;
+    text-align-last: left;
+    padding-top: 75px;
+    padding-left: 15px;
+    padding-right: 15px;
+    hyphens: auto;
+    max-width: 800px;
+}
+
+h2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: x-large;
+    color:mediumslateblue;
+    text-align: left;
+    text-align-last: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    hyphens: auto;
+    max-width: 800px;
+}

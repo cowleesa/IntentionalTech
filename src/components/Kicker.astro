@@ -1,0 +1,33 @@
+---
+// src/components/Kicker.astro
+interface Props {
+  title: string;
+  kicker?: string; // Optional prop
+}
+
+const { title, kicker } = Astro.props;
+---
+
+<header class="article-header">
+  <h1>{title}</h1>
+
+  {kicker && <p class="kicker-text">{kicker}</p>}
+</header>
+
+<style>
+  .article-header {
+    margin-bottom: 2.5rem;
+    max-width: 800px;
+    margin-inline: auto;
+  }
+
+  .kicker-text {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: #555;
+    font-weight: 400;
+    margin-top: 0;
+    max-width: 800px;
+    margin: 2rem auto;
+  }
+</style>

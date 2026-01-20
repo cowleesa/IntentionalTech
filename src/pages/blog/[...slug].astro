@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+// 1. Import your Layout component
+import MainLayout from "../../layouts/MainLayout.astro";
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug || entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<MainLayout title={entry.data.title}>
+  <center
+    ><article>
+      <Content />
+      <p>Published on {entry.data.pubDate.toDateString()}, by Chris Cowley</p>
+    </article>
+  </center>
+</MainLayout>

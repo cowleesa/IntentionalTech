@@ -1,0 +1,151 @@
+---
+// src/components/IntentionalNav.astro
+const pathname = new URL(Astro.request.url).pathname;
+// This helps handle both "/" and "/about/" paths consistently
+const currentPath =
+  pathname === "/" ? "home" : pathname.replace(/^\/|\/$/g, "");
+---
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="logo">Intentional Tech</a>
+
+    <input type="checkbox" id="nav-check" />
+    <label for="nav-check" class="nav-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <ul class="nav-links">
+      <li>
+        <a
+          href="https://www.youtube.com/@IntentionalTech"
+          target="_blank"
+          class={currentPath === "intentional-tech" ? "active" : ""}>YouTube</a
+        >
+      </li>
+      <li>
+        <a href="/blog" class={currentPath === "blog" ? "active" : ""}>Blog</a>
+      </li>
+      <li>
+        <a href="mailto:chris@intentionaltech.co.uk" class="cta-btn">Contact</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  /* ... (Previous styles stay the same) ... */
+
+  .nav-links a.active {
+    color: #0984e3;
+    position: relative;
+  }
+
+  /* Optional: Add a small dot under the active link */
+  .nav-links a.active::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: #0984e3;
+    border-radius: 50%;
+  }
+
+  /* Ensure the CTA button doesn't get the dot */
+  .cta-btn.active::after {
+    display: none;
+  }
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+  }
+
+  .nav-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 2rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #0173ee;
+  }
+
+  .logo span {
+    color: #0984e3;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #2d3436;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: #0984e3;
+  }
+
+  .cta-btn {
+    background: #0173ee;
+    color: white !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+  }
+
+  /* Mobile Logic */
+  #nav-check {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .nav-btn span {
+      width: 25px;
+      height: 2px;
+      background: #2d3436;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: white;
+      flex-direction: column;
+      padding: 2rem;
+    }
+
+    #nav-check:checked ~ .nav-links {
+      display: flex;
+    }
+  }
+</style>
