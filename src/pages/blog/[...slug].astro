@@ -1,25 +1,75 @@
 ---
 import { getCollection } from "astro:content";
-// 1. Import your Layout component
 import MainLayout from "../../layouts/MainLayout.astro";
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blog");
-  return blogEntries.map((entry) => ({
+
+  // 1. Sort entries by date (newest first or oldest first)
+  const sortedEntries = blogEntries.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  );
+
+  return sortedEntries.map((entry, index) => ({
     params: { slug: entry.slug || entry.id },
-    props: { entry },
+    props: {
+      entry,
+      // 2. Pass the next and previous entries as props
+      nextPost: index === 0 ? null : sortedEntries[index - 1],
+      prevPost:
+        index === sortedEntries.length - 1 ? null : sortedEntries[index + 1],
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, nextPost, prevPost } = Astro.props;
 const { Content } = await entry.render();
 ---
 
 <MainLayout title={entry.data.title}>
-  <center
-    ><article>
+  <section class="container">
+    <article>
       <Content />
-      <p>Published on {entry.data.pubDate.toDateString()}, by Chris Cowley</p>
+      <p class="author-info">
+        Published on {entry.data.pubDate.toDateString()}, by Chris Cowley
+      </p>
     </article>
-  </center>
+
+    <nav class="pagination">
+      {
+        prevPost ? (
+          <a href={`/blog/${prevPost.slug}`}>&larr; {prevPost.data.title}</a>
+        ) : (
+          <div />
+        )
+      }
+
+      {
+        nextPost && (
+          <a href={`/blog/${nextPost.slug}`}>{nextPost.data.title} &rarr;</a>
+        )
+      }
+    </nav>
+  </section>
 </MainLayout>
+
+<style>
+  .container {
+    max-width: 800px; /* Limits the width */
+    margin: 0 auto; /* Centers the container horizontally */
+    padding: 2rem; /* Adds space on the sides for mobile */
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .author-info {
+    font-style: italic;
+    margin-top: 2rem;
+    text-align: center;
+  }
+</style>

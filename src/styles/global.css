@@ -41,3 +41,42 @@ h2 {
     hyphens: auto;
     max-width: 800px;
 }
+
+/* 1. Basic Table Setup */
+table {
+  width: 100%;
+  border-collapse: collapse; /* This merges double borders into one */
+  margin: 25px 0;
+  font-size: 18px;
+  font-family: sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding-left: 15px;
+    padding-right: 15px;
+    hyphens: auto;
+    max-width: 800px;
+}
+
+/* 2. Style the Header Row */
+table thead tr {
+  background-color: #0984e3;
+  color: #ffffff;
+  text-align: left;
+}
+
+/* 3. Add Padding to Cells */
+table th,
+table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dddddd;
+}
+
+/* 4. Zebra Striping (Optional) */
+table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+/* 5. Highlight the last row or hover effect */
+table tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
