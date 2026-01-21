@@ -8,7 +8,7 @@ const currentPath =
 
 <nav class="navbar">
   <div class="nav-container">
-    <a href="/" class="logo">Intentional Tech</a>
+    <a href={`${import.meta.env.BASE_URL}`} class="logo">Intentional Tech</a>
 
     <input type="checkbox" id="nav-check" />
     <label for="nav-check" class="nav-btn">
@@ -26,7 +26,10 @@ const currentPath =
         >
       </li>
       <li>
-        <a href="/blog" class={currentPath === "blog" ? "active" : ""}>Blog</a>
+        <a
+          href={`${import.meta.env.BASE_URL}/blog`}
+          class={currentPath === "blog" ? "active" : ""}>Blog</a
+        >
       </li>
       <li>
         <a href="mailto:chris@intentionaltech.co.uk" class="cta-btn">Contact</a>
