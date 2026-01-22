@@ -41,7 +41,7 @@ const base = import.meta.env.BASE_URL;
       {
         prevPost ? (
           <a href={`${import.meta.env.BASE_URL}blog/${prevPost.slug}`}>
-            &larr; {prevPost.data.title}
+            &#128072; {prevPost.data.title}
           </a>
         ) : (
           <div />
@@ -50,7 +50,7 @@ const base = import.meta.env.BASE_URL;
       {
         nextPost && (
           <a href={`${import.meta.env.BASE_URL}blog/${nextPost.slug}`}>
-            {nextPost.data.title} &rarr;
+            {nextPost.data.title} &#128073;
           </a>
         )
       }
