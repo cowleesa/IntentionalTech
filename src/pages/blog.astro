@@ -2,10 +2,8 @@
 import { getCollection } from "astro:content";
 import MainLayout from "../layouts/MainLayout.astro";
 
-// 1. Fetch all entries from the 'blog' collection
 const allPosts = await getCollection("blog");
 
-// 2. Sort them by date (Newest first)
 const sortedPosts = allPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
@@ -14,15 +12,137 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <MainLayout title="Intentional Tech Blog" description="Blog">
-  <h1>Posts</h1>
-  <ul>
-    {
-      sortedPosts.map((post) => (
-        <li>
-          <span>{post.data.pubDate.toLocaleDateString()}</span>
-          <a href={`${base}blog/${post.slug || post.id}/`}>{post.data.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <section class="blog-container">
+    <h1 class="page-title">Posts</h1>
+
+    <div class="posts-grid">
+      {
+        sortedPosts.map((post) => (
+          <article class="post-card">
+            <time datetime={post.data.pubDate.toISOString()}>
+              {post.data.pubDate.toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </time>
+            <h2 class="post-heading">
+              <a href={`${base}blog/${post.slug || post.id}/`}>
+                {post.data.title}
+              </a>
+            </h2>
+            {post.data.description && (
+              <p class="post-excerpt">{post.data.description}</p>
+            )}
+            <a
+              href={`${base}blog/${post.slug || post.id}/`}
+              class="read-more"
+              aria-hidden="true"
+            >
+              Read post →
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
 </MainLayout>
+
+<style>
+  .blog-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .page-title {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.5rem;
+    opacity: 0.9;
+  }
+
+  .posts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .post-card {
+    position: relative;
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border using current text color alpha */
+    border-radius: 8px;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Dark mode compatibility for the border if not defined globally */
+  @media (prefers-color-scheme: dark) {
+    .post-card {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  time {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .post-heading {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .post-heading a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Makes the entire card clickable */
+  .post-heading a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .post-excerpt {
+    margin: 0.5rem 0 0;
+    line-height: 1.5;
+    opacity: 0.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .read-more {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: auto;
+    text-decoration: none;
+    opacity: 0.6;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 600px) {
+    .post-card {
+      padding: 1.25rem;
+    }
+    .post-heading {
+      font-size: 1.25rem;
+    }
+  }
+</style>
