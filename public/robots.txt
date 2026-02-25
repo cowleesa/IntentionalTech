@@ -2,7 +2,7 @@
 # Welcome, crawlers! This site is a personal tech blog.
 
 # Sitemap
-Sitemap: https://intentionaltech.co.uk/sitemap.xml
+Sitemap: https://intentionaltech.co.uk/sitemap-index.xml
 
 # Allow all standard search engine crawlers
 User-agent: *
