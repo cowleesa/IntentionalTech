@@ -1,9 +1,50 @@
 ---
 // src/layouts/MainLayout.astro
-const { title = "Intentional Tech" } = Astro.props;
-const { description = "Welcome to Intentional Tech" } = Astro.props;
 import "../styles/global.css";
 import IntentionalNav from "../components/IntentionalNav.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  type?: "website" | "article";
+  pubDate?: Date;
+  author?: string;
+}
+
+const {
+  title = "Intentional Tech",
+  description = "Welcome to Intentional Tech",
+  type = "website",
+  pubDate,
+  author = "Chris Cowley",
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const siteName = "Intentional Tech";
+
+const schema = type === "article" && pubDate
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: title,
+      description,
+      datePublished: pubDate.toISOString(),
+      author: {
+        "@type": "Person",
+        name: author,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: siteName,
+      },
+      url: canonicalUrl,
+    }
+  : {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: siteName,
+      url: Astro.site?.href,
+    };
 ---
 
 <!doctype html>
@@ -12,6 +53,20 @@ import IntentionalNav from "../components/IntentionalNav.astro";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteName} />
+    {pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <!-- Schema.org -->
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <meta
       name="theme-color"
       content="lavender"
