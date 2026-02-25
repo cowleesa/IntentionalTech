@@ -9,6 +9,7 @@ interface Props {
   type?: "website" | "article";
   pubDate?: Date;
   author?: string;
+  ogImage?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   type = "website",
   pubDate,
   author = "Chris Cowley",
+  ogImage,
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
@@ -61,10 +63,14 @@ const schema = type === "article" && pubDate
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={siteName} />
     {pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="Intentional Tech" href={new URL('/rss.xml', Astro.site).href} />
     <!-- Schema.org -->
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <meta
