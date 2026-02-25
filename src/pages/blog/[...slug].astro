@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
+import BackToTop from "../../components/BackToTop.astro";
+import { getReadingTime } from "../../utils/reading-time";
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blog");
@@ -23,6 +25,8 @@ export async function getStaticPaths() {
 const { entry, nextPost, prevPost } = Astro.props;
 const { Content } = await entry.render();
 const base = import.meta.env.BASE_URL;
+const readingTime = getReadingTime(entry.body);
+const ogImage = new URL(`/og/${entry.slug || entry.id}.svg`, Astro.site).href;
 ---
 
 <MainLayout
@@ -31,11 +35,35 @@ const base = import.meta.env.BASE_URL;
   type="article"
   pubDate={entry.data.pubDate}
   author={entry.data.author}
+  ogImage={ogImage}
 >
   <article class="post-container">
+    <div class="post-meta">
+      <time datetime={entry.data.pubDate.toISOString()}>
+        {entry.data.pubDate.toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </time>
+      <span class="meta-separator" aria-hidden="true">&middot;</span>
+      <span class="reading-time">{readingTime} min read</span>
+    </div>
+
     <div class="article-content">
       <Content />
     </div>
+
+    {entry.data.tags?.length > 0 && (
+      <div class="post-tags">
+        <span class="tags-label">Tags</span>
+        <div class="tags-list">
+          {entry.data.tags.map((tag: string) => (
+            <a href={`${base}tags/${tag}/`} class="tag-pill">{tag}</a>
+          ))}
+        </div>
+      </div>
+    )}
 
     <footer class="post-footer">
       <div class="author-info">
@@ -84,6 +112,7 @@ const base = import.meta.env.BASE_URL;
       }
     </nav>
   </article>
+  <BackToTop />
 </MainLayout>
 
 <style>
@@ -91,6 +120,66 @@ const base = import.meta.env.BASE_URL;
     max-width: var(--content-width);
     margin: 0 auto;
     padding: calc(var(--nav-height) + 2rem) var(--content-padding) 4rem;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+  }
+
+  .meta-separator {
+    margin: 0 0.5rem;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .tags-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .tag-pill:hover {
+    background: var(--color-accent);
+    color: #ffffff;
   }
 
   .post-footer {

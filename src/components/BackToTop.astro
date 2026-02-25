@@ -1,0 +1,55 @@
+<button class="back-to-top" aria-label="Back to top" id="back-to-top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round"
+       stroke-linejoin="round">
+    <path d="M12 19V5" />
+    <path d="m5 12 7-7 7 7" />
+  </svg>
+</button>
+
+<script>
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn?.classList.toggle('visible', window.scrollY > 400);
+  });
+  btn?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition:
+      opacity var(--transition-base),
+      transform var(--transition-base),
+      background-color var(--transition-fast);
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .back-to-top:hover {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
+</style>

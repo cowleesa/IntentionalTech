@@ -1,0 +1,70 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Page Not Found | Intentional Tech" description="The page you're looking for doesn't exist.">
+  <section class="not-found">
+    <div class="not-found-label">Error 404</div>
+    <h1 class="not-found-title">Page Not Found</h1>
+    <p class="not-found-text">
+      The page you are looking for does not exist or has been moved.
+    </p>
+    <a href="/" class="not-found-link">Back to Home</a>
+  </section>
+</MainLayout>
+
+<style>
+  .not-found {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: calc(var(--nav-height) + 6rem) var(--content-padding) 4rem;
+    text-align: center;
+  }
+
+  .not-found-label {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .not-found-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 800;
+    color: var(--color-heading);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .not-found-text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .not-found-link {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .not-found-link:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+  }
+</style>

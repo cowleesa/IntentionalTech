@@ -1,12 +1,14 @@
 import { defineCollection, z } from 'astro:content';
 
 const blog = defineCollection({
-  type: 'content', // This is CRITICAL for .md and .mdx files
+  type: 'content',
   schema: z.object({
     title: z.string(),
     pubDate: z.date(),
     description: z.string(),
-    // ... rest of your schema
+    author: z.string().default("Chris Cowley"),
+    tags: z.array(z.string()).default([]),
+    image: z.string().optional(),
   }),
 });
 
