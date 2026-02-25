@@ -5,7 +5,6 @@ import MainLayout from "../../layouts/MainLayout.astro";
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blog");
 
-  // 1. Sort entries by date (newest first or oldest first)
   const sortedEntries = blogEntries.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
   );
@@ -14,7 +13,6 @@ export async function getStaticPaths() {
     params: { slug: entry.slug || entry.id },
     props: {
       entry,
-      // 2. Pass the next and previous entries as props
       nextPost: index === 0 ? null : sortedEntries[index - 1],
       prevPost:
         index === sortedEntries.length - 1 ? null : sortedEntries[index + 1],
@@ -24,24 +22,41 @@ export async function getStaticPaths() {
 
 const { entry, nextPost, prevPost } = Astro.props;
 const { Content } = await entry.render();
-
 const base = import.meta.env.BASE_URL;
 ---
 
 <MainLayout title={entry.data.title}>
-  <section class="container">
-    <article>
+  <article class="post-container">
+    <div class="article-content">
       <Content />
-      <p class="author-info">
-        Published on {entry.data.pubDate.toDateString()}, by Chris Cowley
-      </p>
-    </article>
+    </div>
 
-    <nav class="pagination">
+    <footer class="post-footer">
+      <div class="author-info">
+        <span class="author-label">Written by</span>
+        <span class="author-name">Chris Cowley</span>
+        <time datetime={entry.data.pubDate.toISOString()}>
+          {entry.data.pubDate.toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </time>
+      </div>
+    </footer>
+
+    <nav class="pagination" aria-label="Post navigation">
       {
         prevPost ? (
-          <a href={`${import.meta.env.BASE_URL}blog/${prevPost.slug}`}>
-            &#128072; {prevPost.data.title}
+          <a href={`${base}blog/${prevPost.slug}`} class="pagination-link pagination-prev">
+            <span class="pagination-direction">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5" />
+                <path d="m12 19-7-7 7-7" />
+              </svg>
+              Older
+            </span>
+            <span class="pagination-title">{prevPost.data.title}</span>
           </a>
         ) : (
           <div />
@@ -49,32 +64,126 @@ const base = import.meta.env.BASE_URL;
       }
       {
         nextPost && (
-          <a href={`${import.meta.env.BASE_URL}blog/${nextPost.slug}`}>
-            {nextPost.data.title} &#128073;
+          <a href={`${base}blog/${nextPost.slug}`} class="pagination-link pagination-next">
+            <span class="pagination-direction">
+              Newer
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </span>
+            <span class="pagination-title">{nextPost.data.title}</span>
           </a>
         )
       }
     </nav>
-  </section>
+  </article>
 </MainLayout>
 
 <style>
-  .container {
-    max-width: 800px; /* Limits the width */
-    margin: 0 auto; /* Centers the container horizontally */
-    padding: 2rem; /* Adds space on the sides for mobile */
+  .post-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: calc(var(--nav-height) + 2rem) var(--content-padding) 4rem;
   }
 
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-top: 2rem;
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--color-accent);
   }
 
   .author-info {
-    font-style: italic;
-    margin-top: 2rem;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .author-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  .author-name {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .author-info time {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pagination-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    text-decoration: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    transition: background-color var(--transition-fast);
+    max-width: 48%;
+  }
+
+  .pagination-link:hover {
+    background-color: var(--color-accent-subtle);
+  }
+
+  .pagination-next {
+    margin-left: auto;
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .pagination-direction {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .pagination-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-heading);
+    line-height: 1.3;
+  }
+
+  @media (max-width: 600px) {
+    .pagination {
+      flex-direction: column;
+    }
+
+    .pagination-link {
+      max-width: 100%;
+    }
+
+    .pagination-next {
+      text-align: left;
+      align-items: flex-start;
+    }
   }
 </style>

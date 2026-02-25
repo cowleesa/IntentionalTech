@@ -2,32 +2,45 @@
 // src/components/Kicker.astro
 interface Props {
   title: string;
-  kicker?: string; // Optional prop
+  kicker?: string;
 }
 
 const { title, kicker } = Astro.props;
 ---
 
 <header class="article-header">
-  <h1>{title}</h1>
-
+  <h1 class="article-title">{title}</h1>
   {kicker && <p class="kicker-text">{kicker}</p>}
+  <div class="header-rule" aria-hidden="true"></div>
 </header>
 
 <style>
   .article-header {
     margin-bottom: 2.5rem;
-    max-width: 800px;
-    margin-inline: auto;
+  }
+
+  .article-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 800;
+    color: var(--color-heading);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
   }
 
   .kicker-text {
     font-size: 1.25rem;
     line-height: 1.5;
-    color: #555;
+    color: var(--color-text-muted);
     font-weight: 400;
-    margin-top: 0;
-    max-width: 800px;
-    margin: 2rem auto;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .header-rule {
+    width: 4rem;
+    height: 3px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
   }
 </style>

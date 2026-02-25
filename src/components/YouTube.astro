@@ -8,6 +8,7 @@ const { id, title = "YouTube Video", caption } = Astro.props;
     <iframe
       src={`https://www.youtube.com/embed/${id}`}
       title={title}
+      loading="lazy"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen></iframe>
   </div>
@@ -16,18 +17,16 @@ const { id, title = "YouTube Video", caption } = Astro.props;
 
 <style>
   .video-container {
-    max-width: 775px;
-    margin: 2rem auto;
-    padding-left: 20px;
-    padding-right: 20px;
+    max-width: 100%;
+    margin: 2rem 0;
   }
 
   .video-wrapper {
     aspect-ratio: 16 / 9;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
+    border-radius: 0.75rem;
     overflow: hidden;
-    background: #000; /* Prevents flicker before load */
+    background: #000;
+    border: 1px solid var(--color-border);
   }
 
   iframe {
@@ -39,10 +38,11 @@ const { id, title = "YouTube Video", caption } = Astro.props;
 
   .video-caption {
     margin-top: 0.75rem;
-    font-size: 0.875rem;
-    color: #666;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
     text-align: left;
-    font-style: italic;
     line-height: 1.4;
+    letter-spacing: 0.01em;
   }
 </style>
