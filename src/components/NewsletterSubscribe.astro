@@ -1,0 +1,153 @@
+---
+// src/components/NewsletterSubscribe.astro
+---
+
+<aside class="newsletter">
+  <div class="newsletter-inner">
+    <h3 class="newsletter-heading">Stay in the loop</h3>
+    <p class="newsletter-desc">
+      Get new posts delivered straight to your inbox. No spam, unsubscribe anytime.
+    </p>
+    <form
+      action="https://buttondown.com/api/emails/embed-subscribe/IntentionalTech"
+      method="post"
+      class="newsletter-form"
+      referrerpolicy="unsafe-url"
+    >
+      <div class="newsletter-field">
+        <input
+          type="email"
+          name="email"
+          id="bd-email"
+          placeholder="you@example.com"
+          required
+          aria-label="Email address"
+        />
+        <button type="submit">Subscribe</button>
+      </div>
+    </form>
+    <p class="newsletter-powered">
+      <a
+        href="https://buttondown.com/refer/IntentionalTech"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Powered by Buttondown
+      </a>
+    </p>
+  </div>
+</aside>
+
+<style>
+  .newsletter {
+    margin-top: 3rem;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .newsletter-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .newsletter-heading {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  .newsletter-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .newsletter-form {
+    margin-top: 0.75rem;
+  }
+
+  .newsletter-field {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .newsletter-field input {
+    flex: 1;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .newsletter-field input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .newsletter-field input:focus {
+    border-color: var(--color-accent);
+  }
+
+  .newsletter-field button {
+    padding: 0.625rem 1.25rem;
+    background: var(--color-accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .newsletter-field button:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .newsletter-powered {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+  }
+
+  .newsletter-powered a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .newsletter-powered a:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 600px) {
+    .newsletter {
+      padding: 1.5rem;
+    }
+
+    .newsletter-field {
+      flex-direction: column;
+    }
+
+    .newsletter-field button {
+      width: 100%;
+    }
+  }
+</style>

@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
 import BackToTop from "../../components/BackToTop.astro";
+import NewsletterSubscribe from "../../components/NewsletterSubscribe.astro";
 import { getReadingTime } from "../../utils/reading-time";
 
 export async function getStaticPaths() {
@@ -78,6 +79,8 @@ const ogImage = new URL(`/og/${entry.slug || entry.id}.svg`, Astro.site).href;
         </time>
       </div>
     </footer>
+
+    <NewsletterSubscribe />
 
     <nav class="pagination" aria-label="Post navigation">
       {
