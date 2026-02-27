@@ -27,7 +27,9 @@ const { entry, nextPost, prevPost } = Astro.props;
 const { Content } = await entry.render();
 const base = import.meta.env.BASE_URL;
 const readingTime = getReadingTime(entry.body);
-const ogImage = new URL(`/og/${entry.slug || entry.id}.svg`, Astro.site).href;
+const ogImage = entry.data.image
+  ? new URL(entry.data.image, Astro.site).href
+  : new URL(`/og/${entry.slug || entry.id}.svg`, Astro.site).href;
 ---
 
 <MainLayout
