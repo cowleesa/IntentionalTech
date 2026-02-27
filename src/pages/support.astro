@@ -15,8 +15,54 @@ import MainLayout from "../layouts/MainLayout.astro";
 
     <div class="support-content">
       <p>
-        Coming soon.
+        The best way to support Intentional Tech is to keep watching, reading and
+        sharing content with your friends.
       </p>
+      <p>
+        You could also consider making purchases from Intentional Tech's affiliate
+        partners. Intentional Tech may receive commission when you use these links,
+        which will help fund future videos and web projects.
+      </p>
+
+      <ul class="affiliate-list">
+        <li>
+          <a href="https://geni.us/DeskSetup2025" target="_blank" rel="noopener noreferrer">
+            Amazon
+          </a>
+        </li>
+        <li>
+          <a href="https://nuphy.com?sca_ref=5076574.OLFWd1df6b&utm_source=affiliate&utm_medium=kol&utm_campaign=nuphy_affiliate" target="_blank" rel="noopener noreferrer">
+            NuPhy Studio
+          </a>
+        </li>
+        <li>
+          <a href="https://ascrono.com/pages/macbook-docking-station?ref=intentionaltech" target="_blank" rel="noopener noreferrer">
+            Ascrono
+          </a>
+        </li>
+        <li>
+          <a href="https://www.insta360.com/sal/go-3s?utm_term=INRKSQ" target="_blank" rel="noopener noreferrer">
+            Insta360
+          </a>
+        </li>
+        <li>
+          <a href="https://www.eloesports.com/Intentiona" target="_blank" rel="noopener noreferrer">
+            ELO
+          </a>
+        </li>
+        <li>
+          <a href="https://www.gpd-minipc.com/?ref=CHRIS" target="_blank" rel="noopener noreferrer">
+            GPD
+          </a>
+        </li>
+        <li>
+          <a href="https://grovemade.com/?rfsn=7243907.9ca1cb" target="_blank" rel="noopener noreferrer">
+            Grovemade
+          </a>
+        </li>
+      </ul>
+
+      <p class="thank-you">Thank You!</p>
     </div>
   </section>
 </MainLayout>
@@ -64,5 +110,47 @@ import MainLayout from "../layouts/MainLayout.astro";
     font-size: 1.125rem;
     line-height: 1.7;
     color: var(--color-text);
+    margin-bottom: 1.25rem;
+  }
+
+  .affiliate-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .affiliate-list li {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .affiliate-list a {
+    display: block;
+    padding: 0.875rem 0;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-heading);
+    text-decoration: none;
+    transition: color var(--transition-fast), padding-left var(--transition-fast);
+  }
+
+  .affiliate-list a:hover {
+    color: var(--color-accent);
+    padding-left: 0.5rem;
+  }
+
+  .thank-you {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-heading);
+    margin-top: 2rem !important;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--color-accent);
+    display: inline-block;
   }
 </style>
