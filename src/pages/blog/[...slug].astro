@@ -78,6 +78,16 @@ const ogImage = new URL(`/og/${entry.slug || entry.id}.svg`, Astro.site).href;
           })}
         </time>
       </div>
+      <a href="/rss.xml" class="rss-link" aria-label="RSS Feed">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+          <path d="M4 11a9 9 0 0 1 9 9" />
+          <path d="M4 4a16 16 0 0 1 16 16" />
+          <circle cx="5" cy="19" r="1" />
+        </svg>
+        RSS Feed
+      </a>
     </footer>
 
     <NewsletterSubscribe />
@@ -189,12 +199,33 @@ const ogImage = new URL(`/og/${entry.slug || entry.id}.svg`, Astro.site).href;
     margin-top: 3rem;
     padding-top: 1.5rem;
     border-top: 2px solid var(--color-accent);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
   }
 
   .author-info {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  .rss-link {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  .rss-link:hover {
+    color: var(--color-accent);
   }
 
   .author-label {
