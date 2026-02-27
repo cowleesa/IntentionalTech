@@ -196,12 +196,22 @@ import YouTube from "../components/YouTube.astro";
   }
 
   .btn-blog {
-    background: var(--color-accent);
+    background: #7c3aed;
     color: #ffffff;
   }
 
   .btn-blog:hover {
-    background: var(--color-accent-hover);
+    background: #6d28d9;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .btn-blog {
+      background: #8b5cf6;
+    }
+
+    .btn-blog:hover {
+      background: #7c3aed;
+    }
   }
 
   .btn-support {
