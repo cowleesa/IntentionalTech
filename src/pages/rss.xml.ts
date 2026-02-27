@@ -51,12 +51,18 @@ export async function GET(context: APIContext) {
       const cleanedMarkdown = mdxToRssHtml(post.body);
       const htmlContent = await renderMarkdownToHtml(cleanedMarkdown);
 
+      const slug = post.slug || post.id;
+      const imageUrl = post.data.image
+        ? new URL(post.data.image, context.site).href
+        : new URL(`og/${slug}.svg`, context.site).href;
+
       return {
         title: post.data.title,
         pubDate: post.data.pubDate,
         description: post.data.description,
-        link: `/blog/${post.slug || post.id}/`,
+        link: `/blog/${slug}/`,
         content: htmlContent,
+        customData: `<media:content url="${imageUrl}" medium="image" />`,
       };
     })
   );
@@ -65,6 +71,7 @@ export async function GET(context: APIContext) {
     title: 'Intentional Tech',
     description: 'Mindful reviews and stories about handheld tech for casual gamers.',
     site: context.site!,
+    xmlns: { media: 'http://search.yahoo.com/mrss/' },
     items,
     customData: '<language>en-gb</language>',
   });
