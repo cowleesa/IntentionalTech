@@ -1,0 +1,68 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout
+  title="Support | Intentional Tech"
+  description="Support Intentional Tech and help keep the content going."
+>
+  <section class="support-container">
+    <header class="support-header">
+      <div class="header-label">Support</div>
+      <h1 class="page-title">Support Intentional Tech</h1>
+      <p class="page-subtitle">Help keep the content going.</p>
+    </header>
+
+    <div class="support-content">
+      <p>
+        Coming soon.
+      </p>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .support-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: calc(var(--nav-height) + 3rem) var(--content-padding) 6rem;
+  }
+
+  .support-header {
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px solid var(--color-heading);
+  }
+
+  .header-label {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--color-heading);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .support-content p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+</style>
