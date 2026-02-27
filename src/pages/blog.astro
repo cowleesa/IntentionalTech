@@ -16,7 +16,19 @@ const base = import.meta.env.BASE_URL;
   <section class="blog-container">
     <header class="blog-header">
       <h1 class="page-title">Blog</h1>
-      <p class="post-count">{sortedPosts.length} posts</p>
+      <div class="blog-header-meta">
+        <p class="post-count">{sortedPosts.length} posts</p>
+        <a href="/rss.xml" class="rss-link" aria-label="RSS Feed">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round">
+            <path d="M4 11a9 9 0 0 1 9 9" />
+            <path d="M4 4a16 16 0 0 1 16 16" />
+            <circle cx="5" cy="19" r="1" />
+          </svg>
+          RSS
+        </a>
+      </div>
     </header>
 
     <div class="posts-list">
@@ -92,6 +104,29 @@ const base = import.meta.env.BASE_URL;
     margin-bottom: 2.5rem;
     padding-bottom: 1rem;
     border-bottom: 3px solid var(--color-heading);
+  }
+
+  .blog-header-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .rss-link {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .rss-link:hover {
+    color: var(--color-accent);
   }
 
   .page-title {
