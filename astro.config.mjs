@@ -13,5 +13,9 @@ export default defineConfig({
   // instead of "intentionaltech.co.uk/IntentionalTech/about"
   base: '/',
 
+  redirects: {
+    '/newsletter': 'https://buttondown.com/IntentionalTech'
+  },
+
   integrations: [mdx(), sitemap()]
 });
