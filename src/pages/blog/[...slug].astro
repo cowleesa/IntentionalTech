@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
 import BackToTop from "../../components/BackToTop.astro";
 import NewsletterSubscribe from "../../components/NewsletterSubscribe.astro";
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   );
 
   return sortedEntries.map((entry, index) => ({
-    params: { slug: entry.slug || entry.id },
+    params: { slug: entry.id.replace(/\.[^.]+$/, '') },
     props: {
       entry,
       nextPost: index === 0 ? null : sortedEntries[index - 1],
@@ -24,12 +24,12 @@ export async function getStaticPaths() {
 }
 
 const { entry, nextPost, prevPost } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 const base = import.meta.env.BASE_URL;
 const readingTime = getReadingTime(entry.body);
 const ogImage = entry.data.image
   ? new URL(entry.data.image, Astro.site).href
-  : new URL(`/og/${entry.slug || entry.id}.svg`, Astro.site).href;
+  : new URL(`/og/${entry.id.replace(/\.[^.]+$/, '')}.svg`, Astro.site).href;
 ---
 
 <MainLayout
@@ -97,7 +97,7 @@ const ogImage = entry.data.image
     <nav class="pagination" aria-label="Post navigation">
       {
         prevPost ? (
-          <a href={`${base}blog/${prevPost.slug}`} class="pagination-link pagination-prev">
+          <a href={`${base}blog/${prevPost.id.replace(/\.[^.]+$/, '')}`} class="pagination-link pagination-prev">
             <span class="pagination-direction">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5" />
@@ -113,7 +113,7 @@ const ogImage = entry.data.image
       }
       {
         nextPost && (
-          <a href={`${base}blog/${nextPost.slug}`} class="pagination-link pagination-next">
+          <a href={`${base}blog/${nextPost.id.replace(/\.[^.]+$/, '')}`} class="pagination-link pagination-next">
             <span class="pagination-direction">
               Newer
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

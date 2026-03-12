@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
-    params: { slug: post.slug || post.id },
+    params: { slug: post.id.replace(/\.[^.]+$/, '') },
     props: { title: post.data.title, description: post.data.description },
   }));
 }

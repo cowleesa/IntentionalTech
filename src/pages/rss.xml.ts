@@ -51,7 +51,7 @@ export async function GET(context: APIContext) {
       const cleanedMarkdown = mdxToRssHtml(post.body);
       const htmlContent = await renderMarkdownToHtml(cleanedMarkdown);
 
-      const slug = post.slug || post.id;
+      const slug = post.id.replace(/\.[^.]+$/, '');
       const imageUrl = post.data.image
         ? new URL(post.data.image, context.site).href
         : new URL(`og/${slug}.svg`, context.site).href;
