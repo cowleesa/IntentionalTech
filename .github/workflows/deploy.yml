@@ -21,7 +21,7 @@ jobs:
         # Ensure 'with' is indented correctly under 'uses'
         with:
           path: .
-          node-version: 20
+          node-version: 22
           package-manager: npm
 
   deploy:
