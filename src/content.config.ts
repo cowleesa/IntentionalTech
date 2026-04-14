@@ -10,6 +10,7 @@ const blog = defineCollection({
     author: z.string().default("Chris Cowley"),
     tags: z.array(z.string()).default([]),
     image: z.string().optional(),
+    youtube: z.string().optional(),
   }),
 });
 

@@ -1,0 +1,225 @@
+---
+// src/pages/about.astro
+import MainLayout from "../layouts/MainLayout.astro";
+import YouTube from "../components/YouTube.astro";
+---
+
+<MainLayout
+  title="About | Intentional Tech"
+  description="Intentional Tech makes mindful videos on portable devices, from iPads to handheld gaming PCs and everything in between."
+>
+  <section class="hero">
+    <div class="hero-label">Welcome to</div>
+    <h1 class="hero-title">Intentional Tech</h1>
+    <p class="hero-subtitle">The Story So Far...</p>
+  </section>
+
+  <section class="home-content">
+    <YouTube
+      id="LbpiB0vHA08"
+      title="The Handhelds That Got Me Through The Year!"
+      caption="Video: The Handhelds That Got Me Through The Year! • Intentional Tech • Uploaded Dec 26, 2025"
+    />
+
+    <div class="about-text">
+      <p>
+        <a href="https://youtube.com/@IntentionalTech" target="_blank">
+          Intentional Tech
+        </a> is a YouTube channel where I mostly review handheld tech devices. But it's
+        also an attempt at sharing stories from my life through the medium of technology,
+        which I hope at least some people can relate to.
+      </p>
+      <p>
+        The journey began during the Covid pandemic, when I was simply trying to
+        reclaim some of the agency and creativity that modern times had beaten out
+        of me. Since then, it's followed me through huge changes in both the tech
+        landscape and my life, not least the experience of becoming a father four
+        years ago.
+      </p>
+      <p>
+        Life is messy. It can't be nailed down to a 'niche'. So for a long time, I
+        wasn't sure what to even cover on Intentional Tech. That was until recently,
+        when I began to realise there was a whole host of 'casual' technology fans
+        like me, many of whom also parents, who are in equal measure exhausted by
+        the hyperbole of modern tech media and their own relentless daily grind.
+      </p>
+      <p>
+        I hope I can offer a bit of comradery on this small corner of the internet.
+        I believe that's a nice goal to work towards - but let's enjoy some cool new
+        gadgets while we're at it.
+      </p>
+      <p class="sign-off">Chris</p>
+    </div>
+
+    <div class="home-ctas">
+      <a
+        href="https://www.youtube.com/@IntentionalTech"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-youtube"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
+        </svg>
+        Watch on YouTube
+      </a>
+      <a
+        href="https://intentionaltech.co.uk/blog"
+        class="btn btn-blog"
+      >
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        Read the Blog
+      </a>
+      <a
+        href="https://intentionaltech.co.uk/support"
+        class="btn btn-support"
+      >
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+          <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+          <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/>
+          <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/>
+          <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+        </svg>
+        Lend your Support
+      </a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .hero {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: calc(var(--nav-height) + 3rem) var(--content-padding) 2rem;
+  }
+
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 800;
+    color: var(--color-heading);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    line-height: 1.3;
+    margin-bottom: 0;
+  }
+
+  .home-content {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 var(--content-padding) 4rem;
+  }
+
+  .about-text p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    margin-bottom: 1.25rem;
+  }
+
+  .about-text a {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .sign-off {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-heading);
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--color-accent);
+    display: inline-block;
+  }
+
+  .home-ctas {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-youtube {
+    background: #ff0000;
+    color: #ffffff;
+  }
+
+  .btn-youtube:hover {
+    background: #cc0000;
+  }
+
+  .btn-blog {
+    background: #7c3aed;
+    color: #ffffff;
+  }
+
+  .btn-blog:hover {
+    background: #6d28d9;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .btn-blog {
+      background: #8b5cf6;
+    }
+
+    .btn-blog:hover {
+      background: #7c3aed;
+    }
+  }
+
+  .btn-support {
+    background: #fbbf24;
+    color: #000000;
+  }
+
+  .btn-support:hover {
+    background: #f59e0b;
+  }
+</style>
