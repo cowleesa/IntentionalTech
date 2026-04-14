@@ -36,7 +36,7 @@ sortedPosts.forEach((p) => {
 });
 const otherTags = [...tagCountMap.entries()]
   .filter(([t]) => t !== "reviews" && t !== "lifestyle" && t !== "steam-deck")
-  .sort((a, b) => a[0].localeCompare(b[0]));
+  .sort((a, b) => b[1] - a[1]);
 
 const base = import.meta.env.BASE_URL;
 ---
