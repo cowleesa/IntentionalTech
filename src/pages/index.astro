@@ -47,6 +47,9 @@ const base = import.meta.env.BASE_URL;
 >
   <div class="home-wrapper">
 
+    <!-- Page heading -->
+    <h1 class="page-heading">Handheld Tech for Casual Gamers</h1>
+
     <!-- Featured article -->
     <section class="featured-section">
       <div class="section-label">Latest</div>
@@ -222,6 +225,17 @@ const base = import.meta.env.BASE_URL;
     display: flex;
     flex-direction: column;
     gap: 3rem;
+  }
+
+  /* ── Page heading ── */
+  .page-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--color-heading);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin: 0;
   }
 
   /* ── Section label / headers ── */
