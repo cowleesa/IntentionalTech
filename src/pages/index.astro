@@ -32,7 +32,9 @@ lifestylePosts.forEach((p) => shownIds.add(p.id));
 // Other tags with counts, excluding featured sliders and steam-deck
 const tagCountMap = new Map<string, number>();
 sortedPosts.forEach((p) => {
-  p.data.tags?.forEach((t: string) => tagCountMap.set(t, (tagCountMap.get(t) ?? 0) + 1));
+  p.data.tags?.forEach((t: string) =>
+    tagCountMap.set(t, (tagCountMap.get(t) ?? 0) + 1),
+  );
 });
 const otherTags = [...tagCountMap.entries()]
   .filter(([t]) => t !== "reviews" && t !== "lifestyle" && t !== "steam-deck")
@@ -46,7 +48,6 @@ const base = import.meta.env.BASE_URL;
   description="Calm, considered takes on portable devices — for real people with real lives."
 >
   <div class="home-wrapper">
-
     <!-- Page heading -->
     <h1 class="page-heading">Mindful handheld tech</h1>
 
@@ -54,47 +55,63 @@ const base = import.meta.env.BASE_URL;
     <section class="featured-section">
       <div class="section-label">Latest</div>
       <article class="featured-card">
-        {featured.data.youtube ? (
-          <YouTube
-            id={featured.data.youtube}
-            title={featured.data.title}
-          />
-        ) : featured.data.image && (
-          <img
-            src={featured.data.image}
-            alt={featured.data.title}
-            class="featured-img"
-          />
-        )}
+        {
+          featured.data.youtube ? (
+            <YouTube id={featured.data.youtube} title={featured.data.title} />
+          ) : (
+            featured.data.image && (
+              <img
+                src={featured.data.image}
+                alt={featured.data.title}
+                class="featured-img"
+              />
+            )
+          )
+        }
         <div class="featured-body">
           <time datetime={featured.data.pubDate.toISOString()}>
-            {featured.data.pubDate.toLocaleDateString(undefined, {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {
+              featured.data.pubDate.toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            }
             <span class="meta-sep" aria-hidden="true">&middot;</span>
             {getReadingTime(featured.body)} min read
           </time>
           <h2 class="featured-title">
             <a href={`${base}blog/${featuredSlug}/`}>{featured.data.title}</a>
           </h2>
-          {featured.data.description && (
-            <p class="featured-desc">{featured.data.description}</p>
-          )}
-          {featured.data.tags?.length > 0 && (
-            <div class="card-tags">
-              {featured.data.tags.map((tag: string) => (
-                <a href={`${base}tags/${tag}/`} class="tag-pill">{tag}</a>
-              ))}
-            </div>
-          )}
+          {
+            featured.data.description && (
+              <p class="featured-desc">{featured.data.description}</p>
+            )
+          }
+          {
+            featured.data.tags?.length > 0 && (
+              <div class="card-tags">
+                {featured.data.tags.map((tag: string) => (
+                  <a href={`${base}tags/${tag}/`} class="tag-pill">
+                    {tag}
+                  </a>
+                ))}
+              </div>
+            )
+          }
           <a href={`${base}blog/${featuredSlug}/`} class="read-cta">
             Read the article
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round">
-              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
             </svg>
           </a>
         </div>
@@ -102,118 +119,150 @@ const base = import.meta.env.BASE_URL;
     </section>
 
     <!-- Reviews slider -->
-    {reviewsPosts.length > 0 && (
-      <section class="slider-section">
-        <div class="section-header">
-          <h2 class="section-title">Reviews</h2>
-          <a href={`${base}tags/reviews/`} class="view-all">
-            View all
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round">
-              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-        <div class="slider">
-          {reviewsPosts.map((post) => {
-            const slug = post.id.replace(/\.[^.]+$/, "");
-            return (
-              <article class="slider-card">
-                {post.data.image && (
-                  <img
-                    src={post.data.image}
-                    alt={post.data.title}
-                    class="card-img"
-                  />
-                )}
-                <div class="card-body">
-                  <time datetime={post.data.pubDate.toISOString()}>
-                    {post.data.pubDate.toLocaleDateString(undefined, {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                    <span class="meta-sep" aria-hidden="true">&middot;</span>
-                    {getReadingTime(post.body)} min
-                  </time>
-                  <h3 class="card-title">
-                    <a href={`${base}blog/${slug}/`}>{post.data.title}</a>
-                  </h3>
-                  {post.data.description && (
-                    <p class="card-desc">{post.data.description}</p>
+    {
+      reviewsPosts.length > 0 && (
+        <section class="slider-section">
+          <div class="section-header">
+            <h2 class="section-title">Reviews</h2>
+            <a href={`${base}tags/reviews/`} class="view-all">
+              View all
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <>
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </>
+              </svg>
+            </a>
+          </div>
+          <div class="slider">
+            {reviewsPosts.map((post) => {
+              const slug = post.id.replace(/\.[^.]+$/, "");
+              return (
+                <article class="slider-card">
+                  {post.data.image && (
+                    <img
+                      src={post.data.image}
+                      alt={post.data.title}
+                      class="card-img"
+                    />
                   )}
-                  {post.data.tags?.length > 0 && (
-                    <div class="card-tags">
-                      {post.data.tags.map((tag: string) => (
-                        <a href={`${base}tags/${tag}/`} class="tag-pill">{tag}</a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-    )}
+                  <div class="card-body">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {post.data.pubDate.toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                      <span class="meta-sep" aria-hidden="true">
+                        &middot;
+                      </span>
+                      {getReadingTime(post.body)} min
+                    </time>
+                    <h3 class="card-title">
+                      <a href={`${base}blog/${slug}/`}>{post.data.title}</a>
+                    </h3>
+                    {post.data.description && (
+                      <p class="card-desc">{post.data.description}</p>
+                    )}
+                    {post.data.tags?.length > 0 && (
+                      <div class="card-tags">
+                        {post.data.tags.map((tag: string) => (
+                          <a href={`${base}tags/${tag}/`} class="tag-pill">
+                            {tag}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )
+    }
 
     <!-- The Casual Gamer (lifestyle) slider -->
-    {lifestylePosts.length > 0 && (
-      <section class="slider-section">
-        <div class="section-header">
-          <h2 class="section-title">The Casual Gamer</h2>
-          <a href={`${base}tags/lifestyle/`} class="view-all">
-            View all
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round">
-              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-        <div class="slider">
-          {lifestylePosts.map((post) => {
-            const slug = post.id.replace(/\.[^.]+$/, "");
-            return (
-              <article class="slider-card">
-                {post.data.image && (
-                  <img
-                    src={post.data.image}
-                    alt={post.data.title}
-                    class="card-img"
-                  />
-                )}
-                <div class="card-body">
-                  <time datetime={post.data.pubDate.toISOString()}>
-                    {post.data.pubDate.toLocaleDateString(undefined, {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                    <span class="meta-sep" aria-hidden="true">&middot;</span>
-                    {getReadingTime(post.body)} min
-                  </time>
-                  <h3 class="card-title">
-                    <a href={`${base}blog/${slug}/`}>{post.data.title}</a>
-                  </h3>
-                  {post.data.description && (
-                    <p class="card-desc">{post.data.description}</p>
+    {
+      lifestylePosts.length > 0 && (
+        <section class="slider-section">
+          <div class="section-header">
+            <h2 class="section-title">The Casual Gamer</h2>
+            <a href={`${base}tags/lifestyle/`} class="view-all">
+              View all
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <>
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </>
+              </svg>
+            </a>
+          </div>
+          <div class="slider">
+            {lifestylePosts.map((post) => {
+              const slug = post.id.replace(/\.[^.]+$/, "");
+              return (
+                <article class="slider-card">
+                  {post.data.image && (
+                    <img
+                      src={post.data.image}
+                      alt={post.data.title}
+                      class="card-img"
+                    />
                   )}
-                  {post.data.tags?.length > 0 && (
-                    <div class="card-tags">
-                      {post.data.tags.map((tag: string) => (
-                        <a href={`${base}tags/${tag}/`} class="tag-pill">{tag}</a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-    )}
+                  <div class="card-body">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {post.data.pubDate.toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                      <span class="meta-sep" aria-hidden="true">
+                        &middot;
+                      </span>
+                      {getReadingTime(post.body)} min
+                    </time>
+                    <h3 class="card-title">
+                      <a href={`${base}blog/${slug}/`}>{post.data.title}</a>
+                    </h3>
+                    {post.data.description && (
+                      <p class="card-desc">{post.data.description}</p>
+                    )}
+                    {post.data.tags?.length > 0 && (
+                      <div class="card-tags">
+                        {post.data.tags.map((tag: string) => (
+                          <a href={`${base}tags/${tag}/`} class="tag-pill">
+                            {tag}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )
+    }
 
     <!-- More topics -->
     <section class="more-section">
@@ -221,12 +270,16 @@ const base = import.meta.env.BASE_URL;
         <h2 class="section-title">More Topics</h2>
       </div>
       <div class="more-grid">
-        {otherTags.map(([tag, count]) => (
-          <a href={`${base}tags/${tag}/`} class="tag-card">
-            <span class="tag-name">{tag}</span>
-            <span class="tag-post-count">{count} {count === 1 ? "post" : "posts"}</span>
-          </a>
-        ))}
+        {
+          otherTags.map(([tag, count]) => (
+            <a href={`${base}tags/${tag}/`} class="tag-card">
+              <span class="tag-name">{tag}</span>
+              <span class="tag-post-count">
+                {count} {count === 1 ? "post" : "posts"}
+              </span>
+            </a>
+          ))
+        }
         <a href={`${base}blog`} class="tag-card tag-card--all">
           <span class="tag-name">All Posts</span>
         </a>
@@ -237,7 +290,6 @@ const base = import.meta.env.BASE_URL;
     </section>
 
     <NewsletterSubscribe />
-
   </div>
 </MainLayout>
 
@@ -386,7 +438,9 @@ const base = import.meta.env.BASE_URL;
     font-weight: 600;
     color: var(--color-accent);
     text-decoration: none;
-    transition: gap var(--transition-fast), color var(--transition-fast);
+    transition:
+      gap var(--transition-fast),
+      color var(--transition-fast);
   }
 
   .read-cta:hover {
@@ -418,7 +472,9 @@ const base = import.meta.env.BASE_URL;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
   }
 
   .card-img {
@@ -500,7 +556,9 @@ const base = import.meta.env.BASE_URL;
     padding: 0.125rem 0.5rem;
     border-radius: 9999px;
     background: var(--color-accent-subtle);
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast);
   }
 
   .tag-pill:hover {
