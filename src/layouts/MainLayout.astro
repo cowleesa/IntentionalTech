@@ -108,6 +108,14 @@ const schema = type === "article" && pubDate
       content="QZaW_BTt21KPNwJGhMHud1mPYp2-wmOaswjfE4utUVA"
     />
     <title>{title}</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2NG8PE2NES"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2NG8PE2NES');
+    </script>
   </head>
   <body>
     <IntentionalNav />
