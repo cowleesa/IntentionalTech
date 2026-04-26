@@ -15,6 +15,11 @@ const sortedPosts = allPosts.sort(
 const featured = sortedPosts[0];
 const featuredSlug = featured.id.replace(/\.[^.]+$/, "");
 
+// Recent posts slider: 5 most recent posts, excluding featured
+const recentPosts = sortedPosts
+  .filter((p) => p.id !== featured.id)
+  .slice(0, 5);
+
 // Reviews slider: reviews-tagged posts, excluding featured, up to 5
 const reviewsPosts = sortedPosts
   .filter((p) => p.data.tags?.includes("reviews") && p.id !== featured.id)
@@ -117,6 +122,79 @@ const base = import.meta.env.BASE_URL;
         </div>
       </article>
     </section>
+
+    <!-- Recent Posts slider -->
+    {
+      recentPosts.length > 0 && (
+        <section class="slider-section">
+          <div class="section-header">
+            <h2 class="section-title">Recent Posts</h2>
+            <a href={`${base}blog`} class="view-all">
+              View more
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <>
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </>
+              </svg>
+            </a>
+          </div>
+          <div class="slider">
+            {recentPosts.map((post) => {
+              const slug = post.id.replace(/\.[^.]+$/, "");
+              return (
+                <article class="slider-card">
+                  {post.data.image && (
+                    <img
+                      src={post.data.image}
+                      alt={post.data.title}
+                      class="card-img"
+                    />
+                  )}
+                  <div class="card-body">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {post.data.pubDate.toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                      <span class="meta-sep" aria-hidden="true">
+                        &middot;
+                      </span>
+                      {getReadingTime(post.body)} min
+                    </time>
+                    <h3 class="card-title">
+                      <a href={`${base}blog/${slug}/`}>{post.data.title}</a>
+                    </h3>
+                    {post.data.description && (
+                      <p class="card-desc">{post.data.description}</p>
+                    )}
+                    {post.data.tags?.length > 0 && (
+                      <div class="card-tags">
+                        {post.data.tags.map((tag: string) => (
+                          <a href={`${base}tags/${tag}/`} class="tag-pill">
+                            {tag}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )
+    }
 
     <!-- Reviews slider -->
     {
