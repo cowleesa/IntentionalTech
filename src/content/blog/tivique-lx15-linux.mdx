@@ -1,0 +1,68 @@
+---
+title: "This Laptop was Struggling… But then I ran Linux"
+pubDate: 2026-04-25
+description: "On paper, the TIVIQUE LX15 looks like a solid budget option but performance was not as expected. That is, until I decided to install Linux."
+author: "Chris Cowley"
+image: "/tivique-lx15.jpg"
+tags: ["productivity", "computers", "reviews"]
+---
+
+import Kicker from "/src/components/Kicker.astro";
+import YouTube from "/src/components/YouTube.astro";
+
+<Kicker
+  title="This Laptop was Struggling… But then I ran Linux"
+  kicker="On paper, the TIVIQUE LX15 looks like a solid budget option but performance was not as expected. That is, until I decided to install Linux."
+/>
+
+<YouTube
+  id="NqHPbH_v0pg"
+  title="This Laptop was Struggling… But then I ran Linux"
+  caption="This Laptop was Struggling… But then I ran Linux • Intentional Tech • Uploaded Apr 25, 2026"
+/>
+
+## A Promising Spec Sheet
+
+On paper, the TIVIQUE LX15 looks like a compelling budget laptop. For under £300 you get a Ryzen 4300U processor, 16GB of RAM, and a 512GB M.2 SSD. The headline feature is a 15.6-inch OLED display running at 1080p and 60Hz — that's a genuinely impressive inclusion at this price, and it shows in everyday use. The 1920x1080 aspect ratio gives plenty of room to multitask and makes the screen a natural fit for watching video content.
+
+The 5,000mAh battery lasts a couple of days under light use, and the port selection is more generous than you might expect, including a micro SD card slot that opens up some interesting possibilities for emulation. In a landscape where budget laptops often feel like compromises in every direction, the LX15 reads like something thoughtfully put together.
+
+## Clearly Budget, But Surprisingly Solid
+
+Pick it up and the budget origins are evident, but not embarrassingly so. The chassis feels sturdy and spacious, and TIVIQUE have included a few small touches that show some care in the design — a silicone keyboard mat, for instance, which softens the feel and reduces noise noticeably. The keyboard itself is a little clacky but responsive, and I had no real issues with typing accuracy.
+
+The annoyances are there if you look for them. The lid won't open one-handed without the base lifting off the table. There's some wobble when typing on a flat surface. The stickers on the palm rest are attached with what I can only assume is industrial adhesive. And the numpad — which pushes the main keyboard off-centre — took genuine adjustment to get used to coming from a centred layout.
+
+These are the kinds of things you learn to work around on a budget machine. None of them are dealbreakers, and the OLED display is attractive enough to make sitting down with it feel like less of a compromise.
+
+## The Problem: Windows
+
+Where things fell apart was performance. I've reviewed a number of PCs from TIVIQUE's sister brand Nepo G over the years and always found their budget hardware to punch reasonably well, so the sluggishness here was a surprise.
+
+My main test was a practical one: I've been building out the Intentional Tech website using Astro, and I wanted to work on it using VS Code on the LX15. Running the project locally in a browser was possible, but painfully slow — the kind of slow that kills the urge to work on something. General Chrome usage felt similarly laboured. Light gaming, in theory within reach of this hardware, wasn't really happening either.
+
+The MacBook Neo has made this a harder conversation than it used to be. At a similar price point, it sets a performance baseline that reframes what "acceptable" looks like on a budget laptop. The LX15 on Windows wasn't meeting it.
+
+That's what led me to try Linux.
+
+## Linux Changes Everything
+
+Because the LX15 runs an AMD processor, it's a solid candidate for Linux — AMD's open-source driver support has made it one of the more reliable choices for a first installation. I went with Fedora, one of the more beginner-friendly distributions, and one flexible enough to handle both productivity and some light gaming.
+
+The process is more straightforward than it sounds. Download Balena Etcher, flash a USB stick with the Fedora ISO, reboot and follow the installer. Start to finish, it took about an hour. I came in with essentially no Linux experience beyond running Steam OS on gaming handhelds, which doesn't really count.
+
+The difference was immediate. Everything felt snappy. Heavy Google Slides documents that had ground Chrome to a halt on Windows ran without issue. More importantly, my VS Code setup — the same Astro project that had crawled before, complete with GitHub Copilot for debugging — ran exactly as it does on my MacBook. I spent a good chunk of time going through my back catalogue of videos and converting transcripts into written articles for the website, and the LX15 handled all of it without complaint. I even debugged a tricky issue using VS Code's built-in Copilot, which took longer than it would have done with Claude Code on the Mac, but the fact that it was manageable at all felt like a minor revelation.
+
+## Settling In: Apps, Gaming, and a Few Trade-offs
+
+Switching to Linux means leaving some applications behind. The biggest loss for me was Bear, which I use for writing and previewing markdown. Obsidian covers the same ground well enough, and a VS Code preview extension fills the remaining gaps. For moving files between devices, LocalSend does the job of AirDrop without needing to be in the Apple ecosystem.
+
+On the gaming side, the results were more impressive than I'd expected. _Yakuza Kiwami_ ran at around 30 frames per second — not silky, but entirely playable, and something I wouldn't have believed possible under the Windows installation. This still isn't a gaming laptop, and nobody should buy it expecting one, but for lighter titles and emulation the hardware has more headroom than it initially appears.
+
+## Final Thoughts
+
+The honest conclusion is that the TIVIQUE LX15 is two different laptops depending on what you run on it. On Windows, I couldn't recommend it — the performance ceiling is too low, and the MacBook Neo makes the value proposition difficult to argue. On Fedora, it's a genuinely capable machine for the price.
+
+Whether that's a recommendation depends entirely on you. If you're comfortable spending an afternoon on the Linux setup, this is a solid option for basic productivity, light development work, or as a first machine for someone learning to code. It's a meaningful step up from a Chromebook. The problem is that the people most likely to benefit from it — a student, a retiree, someone who just needs a laptop for everyday tasks — are also the least likely to go through the installation process. That's the conundrum the LX15 can't quite escape.
+
+**My recommendation:** At under £300, the LX15 earns a cautious recommendation — but only if you're willing to install Linux. If that's not you, spend your money elsewhere.
