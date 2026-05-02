@@ -15,20 +15,22 @@ const sortedPosts = allPosts.sort(
 const featured = sortedPosts[0];
 const featuredSlug = featured.id.replace(/\.[^.]+$/, "");
 
-// Recent posts slider: 5 most recent posts, excluding featured
+// Each slider claims posts in page order; no post appears twice.
+const shownIds = new Set([featured.id]);
+
+// Recent Posts: 5 most recent, excluding featured
 const recentPosts = sortedPosts
-  .filter((p) => p.id !== featured.id)
+  .filter((p) => !shownIds.has(p.id))
   .slice(0, 5);
+recentPosts.forEach((p) => shownIds.add(p.id));
 
-// Reviews slider: reviews-tagged posts, excluding featured, up to 5
+// Reviews: reviews-tagged posts not yet shown, up to 5
 const reviewsPosts = sortedPosts
-  .filter((p) => p.data.tags?.includes("reviews") && p.id !== featured.id)
+  .filter((p) => p.data.tags?.includes("reviews") && !shownIds.has(p.id))
   .slice(0, 5);
+reviewsPosts.forEach((p) => shownIds.add(p.id));
 
-// Track shown IDs to prevent duplicates
-const shownIds = new Set([featured.id, ...reviewsPosts.map((p) => p.id)]);
-
-// Casual Gamer (lifestyle) slider: lifestyle-tagged posts, excluding already shown, up to 5
+// Casual Gamer (lifestyle): lifestyle-tagged posts not yet shown, up to 5
 const lifestylePosts = sortedPosts
   .filter((p) => p.data.tags?.includes("lifestyle") && !shownIds.has(p.id))
   .slice(0, 5);
