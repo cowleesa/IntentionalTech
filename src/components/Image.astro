@@ -1,18 +1,43 @@
 ---
 // src/components/Image.astro
 const { src, alt, caption, width, height } = Astro.props;
+
+// Derive optimized paths from the original /images/xxx.jpg src
+const name = src.replace(/^\/images\//, '').replace(/\.[^.]+$/, '');
+const webp900 = `/images/optimized/${name}.webp`;
+const webp450 = `/images/optimized/${name}-450w.webp`;
+const jpg900  = `/images/optimized/${name}.jpg`;
+const isOptimizable = src.startsWith('/images/') && /\.(jpg|jpeg)$/i.test(src);
 ---
 
 <figure class="image-container">
   <div class="image-wrapper">
-    <img
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      loading="lazy"
-      decoding="async"
-    />
+    {isOptimizable ? (
+      <picture>
+        <source
+          type="image/webp"
+          srcset={`${webp450} 450w, ${webp900} 900w`}
+          sizes="(max-width: 600px) 450px, 900px"
+        />
+        <img
+          src={jpg900}
+          alt={alt}
+          width={width}
+          height={height}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    ) : (
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+      />
+    )}
   </div>
   {caption && <figcaption class="image-caption">{caption}</figcaption>}
 </figure>
