@@ -48,6 +48,17 @@ const otherTags = [...tagCountMap.entries()]
   .sort((a, b) => b[1] - a[1]);
 
 const base = import.meta.env.BASE_URL;
+
+function optimizedSrc(raw: string) {
+  const name = raw.replace(/^\/images\//, '').replace(/\.[^.]+$/, '');
+  return {
+    webp900: `/images/optimized/${name}.webp`,
+    webp450: `/images/optimized/${name}-450w.webp`,
+    jpg:     `/images/optimized/${name}.jpg`,
+  };
+}
+
+const featuredImgSrc = featured.data.image ? optimizedSrc(featured.data.image) : null;
 ---
 
 <MainLayout
@@ -66,12 +77,11 @@ const base = import.meta.env.BASE_URL;
           featured.data.youtube ? (
             <YouTube id={featured.data.youtube} title={featured.data.title} />
           ) : (
-            featured.data.image && (
-              <img
-                src={featured.data.image}
-                alt={featured.data.title}
-                class="featured-img"
-              />
+            featuredImgSrc && (
+              <picture>
+                <source type="image/webp" srcset={`${featuredImgSrc.webp450} 450w, ${featuredImgSrc.webp900} 900w`} sizes="(max-width:600px) 450px, 900px" />
+                <img src={featuredImgSrc.jpg} alt={featured.data.title} class="featured-img" width="900" height="506" loading="eager" decoding="async" />
+              </picture>
             )
           )
         }
@@ -153,14 +163,14 @@ const base = import.meta.env.BASE_URL;
           <div class="slider">
             {recentPosts.map((post) => {
               const slug = post.id.replace(/\.[^.]+$/, "");
+              const imgSrc = post.data.image ? optimizedSrc(post.data.image) : null;
               return (
                 <article class="slider-card">
-                  {post.data.image && (
-                    <img
-                      src={post.data.image}
-                      alt={post.data.title}
-                      class="card-img"
-                    />
+                  {imgSrc && (
+                    <picture>
+                      <source type="image/webp" srcset={`${imgSrc.webp450} 450w, ${imgSrc.webp900} 900w`} sizes="(max-width:600px) 450px, 900px" />
+                      <img src={imgSrc.jpg} alt={post.data.title} class="card-img" width="900" height="506" loading="lazy" decoding="async" />
+                    </picture>
                   )}
                   <div class="card-body">
                     <time datetime={post.data.pubDate.toISOString()}>
@@ -226,14 +236,14 @@ const base = import.meta.env.BASE_URL;
           <div class="slider">
             {reviewsPosts.map((post) => {
               const slug = post.id.replace(/\.[^.]+$/, "");
+              const imgSrc = post.data.image ? optimizedSrc(post.data.image) : null;
               return (
                 <article class="slider-card">
-                  {post.data.image && (
-                    <img
-                      src={post.data.image}
-                      alt={post.data.title}
-                      class="card-img"
-                    />
+                  {imgSrc && (
+                    <picture>
+                      <source type="image/webp" srcset={`${imgSrc.webp450} 450w, ${imgSrc.webp900} 900w`} sizes="(max-width:600px) 450px, 900px" />
+                      <img src={imgSrc.jpg} alt={post.data.title} class="card-img" width="900" height="506" loading="lazy" decoding="async" />
+                    </picture>
                   )}
                   <div class="card-body">
                     <time datetime={post.data.pubDate.toISOString()}>
@@ -299,14 +309,14 @@ const base = import.meta.env.BASE_URL;
           <div class="slider">
             {lifestylePosts.map((post) => {
               const slug = post.id.replace(/\.[^.]+$/, "");
+              const imgSrc = post.data.image ? optimizedSrc(post.data.image) : null;
               return (
                 <article class="slider-card">
-                  {post.data.image && (
-                    <img
-                      src={post.data.image}
-                      alt={post.data.title}
-                      class="card-img"
-                    />
+                  {imgSrc && (
+                    <picture>
+                      <source type="image/webp" srcset={`${imgSrc.webp450} 450w, ${imgSrc.webp900} 900w`} sizes="(max-width:600px) 450px, 900px" />
+                      <img src={imgSrc.jpg} alt={post.data.title} class="card-img" width="900" height="506" loading="lazy" decoding="async" />
+                    </picture>
                   )}
                   <div class="card-body">
                     <time datetime={post.data.pubDate.toISOString()}>
