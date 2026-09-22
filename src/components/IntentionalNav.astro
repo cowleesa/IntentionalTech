@@ -1,8 +1,14 @@
 ---
 // src/components/IntentionalNav.astro
+import { getSortedTags, formatTagLabel } from "../utils/tags";
+
 const pathname = new URL(Astro.request.url).pathname;
 const currentPath =
   pathname === "/" ? "home" : pathname.replace(/^\/|\/$/g, "");
+
+const topTags = (await getSortedTags()).slice(0, 4);
+const isPostsActive =
+  currentPath.startsWith("blog") || currentPath.startsWith("tags");
 ---
 
 <nav class="navbar">
@@ -27,11 +33,62 @@ const currentPath =
           class={currentPath === "intentional-tech" ? "active" : ""}>YouTube</a
         >
       </li>
-      <li>
-        <a
-          href={`${import.meta.env.BASE_URL}blog`}
-          class={currentPath.startsWith("blog") ? "active" : ""}>Blog</a
+      <li class="nav-item-dropdown">
+        <button
+          type="button"
+          class={`nav-dropdown-trigger ${isPostsActive ? "active" : ""}`}
+          aria-haspopup="menu"
+          aria-expanded="false"
+          aria-controls="posts-menu"
+          id="posts-menu-trigger"
         >
+          Posts
+          <svg
+            class="chevron"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        <ul
+          class="nav-dropdown-menu"
+          id="posts-menu"
+          role="menu"
+          aria-labelledby="posts-menu-trigger"
+          hidden
+        >
+          {
+            topTags.map(({ tag, count }) => (
+              <li role="none">
+                <a
+                  role="menuitem"
+                  href={`${import.meta.env.BASE_URL}tags/${tag}/`}
+                  class="dropdown-tag-link"
+                >
+                  <span class="dropdown-tag-name">{formatTagLabel(tag)}</span>
+                  <span class="dropdown-tag-count">{count}</span>
+                </a>
+              </li>
+            ))
+          }
+          <li role="none" class="dropdown-divider" aria-hidden="true"></li>
+          <li role="none">
+            <a
+              role="menuitem"
+              href={`${import.meta.env.BASE_URL}blog`}
+              class="dropdown-all-link">All Posts</a
+            >
+          </li>
+        </ul>
       </li>
       <li>
         <a
@@ -153,6 +210,126 @@ const currentPath =
     display: none;
   }
 
+  /* Posts dropdown */
+  .nav-item-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown-trigger {
+    font-family: var(--font-body);
+    background: none;
+    border: none;
+    color: var(--color-text);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0;
+    position: relative;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-dropdown-trigger:hover {
+    color: var(--color-accent);
+  }
+
+  .nav-dropdown-trigger.active {
+    color: var(--color-accent);
+  }
+
+  .nav-dropdown-trigger.active::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    border-radius: 1px;
+  }
+
+  .chevron {
+    transition: transform var(--transition-fast);
+  }
+
+  .nav-dropdown-trigger[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+  }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 0.5rem;
+    list-style: none;
+    margin: 0;
+    z-index: 1001;
+  }
+
+  .nav-dropdown-menu[hidden] {
+    display: none;
+  }
+
+  .dropdown-tag-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+
+  .dropdown-tag-link:hover,
+  .dropdown-tag-link:focus-visible {
+    background: var(--color-accent-subtle);
+  }
+
+  .dropdown-tag-name {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+
+  .dropdown-tag-count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: 0.4rem 0.25rem;
+  }
+
+  .dropdown-all-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+
+  .dropdown-all-link:hover,
+  .dropdown-all-link:focus-visible {
+    background: var(--color-accent-subtle);
+  }
+
   /* Mobile */
   #nav-check {
     display: none;
@@ -209,5 +386,59 @@ const currentPath =
     #nav-check:checked ~ .nav-links {
       display: flex;
     }
+
+    .nav-dropdown-menu {
+      position: static;
+      transform: none;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+      min-width: 0;
+    }
   }
 </style>
+
+<script>
+  const trigger = document.getElementById("posts-menu-trigger");
+  const menu = document.getElementById("posts-menu");
+  const wrapper = trigger?.closest(".nav-item-dropdown");
+
+  function closeMenu() {
+    trigger?.setAttribute("aria-expanded", "false");
+    menu?.setAttribute("hidden", "");
+  }
+
+  function openMenu() {
+    trigger?.setAttribute("aria-expanded", "true");
+    menu?.removeAttribute("hidden");
+  }
+
+  trigger?.addEventListener("click", () => {
+    if (trigger.getAttribute("aria-expanded") === "true") {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && trigger?.getAttribute("aria-expanded") === "true") {
+      closeMenu();
+      trigger.focus();
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (wrapper && !wrapper.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  wrapper?.addEventListener("focusout", (e) => {
+    if (!wrapper.contains(e.relatedTarget)) {
+      closeMenu();
+    }
+  });
+</script>
