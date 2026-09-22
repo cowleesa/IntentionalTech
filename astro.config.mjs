@@ -14,7 +14,8 @@ export default defineConfig({
   base: '/',
 
   redirects: {
-    '/newsletter': 'https://buttondown.com/IntentionalTech'
+    '/newsletter': 'https://buttondown.com/IntentionalTech',
+    '/support': '/partners'
   },
 
   integrations: [mdx(), sitemap()]
