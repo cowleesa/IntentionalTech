@@ -1,7 +1,8 @@
 ---
 // src/components/YouTube.astro
 const { id, title = "YouTube Video", caption } = Astro.props;
-const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const thumb = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+const thumbFallback = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 ---
 
 <link rel="preconnect" href="https://i.ytimg.com" />
@@ -10,11 +11,12 @@ const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
   <div class="video-wrapper yt-facade" data-id={id} data-title={title}>
     <img
       src={thumb}
+      onerror={`this.onerror=null;this.src='${thumbFallback}';`}
       alt={`Play video: ${title}`}
       loading="lazy"
       decoding="async"
-      width="480"
-      height="360"
+      width="1280"
+      height="720"
       class="yt-thumb"
     />
     <button class="yt-play" aria-label={`Play ${title}`}>
