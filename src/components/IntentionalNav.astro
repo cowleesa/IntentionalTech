@@ -6,7 +6,11 @@ const pathname = new URL(Astro.request.url).pathname;
 const currentPath =
   pathname === "/" ? "home" : pathname.replace(/^\/|\/$/g, "");
 
-const topTags = (await getSortedTags()).slice(0, 4);
+// "sponsored" is a disclosure label, not a browsable topic — keep it out of the nav shortcut
+const NAV_EXCLUDED_TAGS = new Set(["sponsored"]);
+const topTags = (await getSortedTags())
+  .filter(({ tag }) => !NAV_EXCLUDED_TAGS.has(tag))
+  .slice(0, 4);
 const isPostsActive =
   currentPath.startsWith("blog") || currentPath.startsWith("tags");
 ---
