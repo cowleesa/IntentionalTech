@@ -57,6 +57,12 @@ const ogImage = entry.data.image
       <Content />
     </div>
 
+    {entry.data.tags?.includes("sponsored") && (
+      <p class="sponsored-note">
+        One or more of the products in this article were provided to Intentional Tech for promotional purposes. In some cases, we may have received payment to promote the product on YouTube, Social Media or this website. All opinions are our own.
+      </p>
+    )}
+
     {entry.data.tags?.length > 0 && (
       <div class="post-tags">
         <span class="tags-label">Tags</span>
@@ -152,6 +158,18 @@ const ogImage = entry.data.image
 
   .meta-separator {
     margin: 0 0.5rem;
+  }
+
+  .sponsored-note {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--color-accent);
+    background: var(--color-accent-subtle);
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
   }
 
   .post-tags {
