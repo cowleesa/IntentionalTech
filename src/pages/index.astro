@@ -36,7 +36,7 @@ const lifestylePosts = sortedPosts
   .slice(0, 5);
 lifestylePosts.forEach((p) => shownIds.add(p.id));
 
-// Other tags with counts, excluding featured sliders and steam-deck
+// Other tags with counts, excluding featured sliders
 const tagCountMap = new Map<string, number>();
 sortedPosts.forEach((p) => {
   p.data.tags?.forEach((t: string) =>
@@ -44,7 +44,7 @@ sortedPosts.forEach((p) => {
   );
 });
 const otherTags = [...tagCountMap.entries()]
-  .filter(([t]) => t !== "reviews" && t !== "lifestyle" && t !== "steam-deck")
+  .filter(([t]) => t !== "reviews" && t !== "lifestyle")
   .sort((a, b) => b[1] - a[1]);
 
 const base = import.meta.env.BASE_URL;
