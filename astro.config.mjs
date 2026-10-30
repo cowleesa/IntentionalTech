@@ -18,5 +18,5 @@ export default defineConfig({
     '/support': '/partners'
   },
 
-  integrations: [mdx(), sitemap()]
+  integrations: [mdx(), sitemap({ filter: (page) => !page.endsWith('/tags/sponsored/') })]
 });
