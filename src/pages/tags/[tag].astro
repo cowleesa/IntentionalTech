@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getReadingTime } from "../../utils/reading-time";
+import { TAG_CONTENT } from "../../utils/tag-content";
 
 export async function getStaticPaths() {
   const allPosts = await getCollection("blog");
@@ -20,11 +21,13 @@ export async function getStaticPaths() {
 
 const { tag, posts } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const content = TAG_CONTENT[tag];
 ---
 
 <MainLayout
-  title={`${tag} | Intentional Tech`}
-  description={`Posts tagged "${tag}" on Intentional Tech.`}
+  title={content?.title ?? `${tag} | Intentional Tech`}
+  description={content?.description ?? `Posts tagged "${tag}" on Intentional Tech.`}
+  noindex={content?.noindex}
 >
   <section class="blog-container">
     <header class="blog-header">
@@ -36,10 +39,12 @@ const base = import.meta.env.BASE_URL;
           </svg>
           All tags
         </a>
-        <h1 class="page-title">{tag}</h1>
+        <h1 class="page-title">{content?.heading ?? tag}</h1>
       </div>
       <p class="post-count">{posts.length} {posts.length === 1 ? "post" : "posts"}</p>
     </header>
+
+    {content?.summary && <p class="tag-summary">{content.summary}</p>}
 
     <div class="posts-list">
       {
@@ -126,14 +131,23 @@ const base = import.meta.env.BASE_URL;
     font-weight: 800;
     color: var(--color-heading);
     letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 
   .post-count {
+    white-space: nowrap;
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--color-text-muted);
+  }
+
+  .tag-summary {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: -1rem 0 1.5rem;
   }
 
   .posts-list {
