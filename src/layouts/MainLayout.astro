@@ -12,6 +12,7 @@ interface Props {
   author?: string;
   ogImage?: string;
   noindex?: boolean;
+  youtubeId?: string;
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   author = "Chris Cowley",
   ogImage,
   noindex = false,
+  youtubeId,
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
@@ -33,6 +35,8 @@ const schema = type === "article" && pubDate
       "@type": "BlogPosting",
       headline: title,
       description,
+      // SVG fallback OG images aren't supported by Google
+      ...(ogImage && !ogImage.endsWith(".svg") && { image: ogImage }),
       datePublished: pubDate.toISOString(),
       author: {
         "@type": "Person",
@@ -50,6 +54,18 @@ const schema = type === "article" && pubDate
       name: siteName,
       url: Astro.site?.href,
     };
+
+const videoSchema = youtubeId && pubDate
+  ? {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: title,
+      description,
+      thumbnailUrl: `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`,
+      uploadDate: pubDate.toISOString(),
+      embedUrl: `https://www.youtube.com/embed/${youtubeId}`,
+    }
+  : null;
 ---
 
 <!doctype html>
@@ -77,6 +93,7 @@ const schema = type === "article" && pubDate
     <link rel="alternate" type="application/rss+xml" title="Intentional Tech" href={new URL('/rss.xml', Astro.site).href} />
     <!-- Schema.org -->
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    {videoSchema && <script type="application/ld+json" set:html={JSON.stringify(videoSchema)} />}
     <meta
       name="theme-color"
       content="lavender"
